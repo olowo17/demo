@@ -6,6 +6,7 @@ import com.michael.demo.repository.AddressRepository;
 import com.michael.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,14 +32,16 @@ public class UserServiceImpl implements UserService {
     }
 
     public void registerUser(UserDto userDto) {
-        // Check if the email is already in use
-        if (userRepository.existsByEmail(userDto.email())) {
-            throw new EmailAlreadyExistsException("Email is already in use.");
-        }
+        // Hash the password
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(userDto.password());
+
         User user = new User();
         user.setFullName(userDto.fullName());
         user.setEmail(userDto.email());
         user.setDateOfBirth(userDto.dateOfBirth());
+        user.setPassword(hashedPassword); // Set the hashed password
+
         userRepository.save(user);
     }
 

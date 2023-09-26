@@ -20,10 +20,10 @@ public class User implements Serializable {
     @Column(unique = true)
     private String email;
     private LocalDate dateOfBirth;
+    private String password;
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
-
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
@@ -39,4 +39,6 @@ public class User implements Serializable {
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+
 }

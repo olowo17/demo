@@ -17,7 +17,6 @@ public class Address {
     private String state;
     private String street;
     private String houseNumber;
-
     public void setAddressId(Long addressId) {
         this.addressId = addressId;
     }
