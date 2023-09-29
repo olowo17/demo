@@ -19,8 +19,7 @@ public class WebSecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/users", "/address").permitAll()
-                .requestMatchers(HttpMethod.POST ,"/users").permitAll()
+                .requestMatchers("/users/**", "/address","/login","/validate-token").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement(session->session(session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) );
