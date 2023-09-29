@@ -6,7 +6,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Getter
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -24,21 +24,5 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
 
 }
