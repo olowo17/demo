@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,9 @@ public class LoginController {
         Optional<User> userOptional = userRepository.findByEmail(tokenRequestResponse.getUsername());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (user.getPassword().equals(tokenRequestResponse.getPassword())) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            if (passwordEncoder.matches(tokenRequestResponse.getPassword(), user.getPassword())) {
                 String token = jwtToken.generateToken(tokenRequestResponse.getUsername());
                 TokenRequestResponse response = new TokenRequestResponse();
                 response.setToken(token);
@@ -41,6 +44,7 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("Invalid Credentials");
     }
+
 
     @PostMapping("/validate-token")
     public ResponseEntity<Object> validateToken(@RequestBody TokenRequestResponse tokenReqRes){
