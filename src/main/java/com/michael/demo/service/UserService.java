@@ -1,4 +1,5 @@
 package com.michael.demo.service;
+import com.michael.demo.dto.UserDto;
 import com.michael.demo.model.User;
 import org.springframework.http.ResponseEntity;
 
@@ -11,7 +12,7 @@ public interface UserService {
 
     ResponseEntity<?> getUserById(Long id, String token);
 
-    public void registerUser(User user);
+    public void registerUser(UserDto userDto);
     public void deleteUser( Long id);
     public void updateUserAddress(Long userId, Long addressId);
 }
